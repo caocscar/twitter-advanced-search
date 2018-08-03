@@ -1,6 +1,6 @@
 # Twitter Advanced Search
 
-This Python 3 code is a port of https://github.com/PJHRobles/Twitter-Get-Old-Tweets-Scraper which is originally based on https://github.com/Jefferson-Henrique/GetOldTweets-python.
+This Python 3 code is a heavily modified version of https://github.com/PJHRobles/Twitter-Get-Old-Tweets-Scraper which was originally based on https://github.com/Jefferson-Henrique/GetOldTweets-python.
 
 ## Example
 Here is a sample command line which uses all the available keyword arguments.  
@@ -29,6 +29,6 @@ I've made the following changes after cloning the repository:
 - exchanged `pyparsing` for `BeautifulSoup`
 - exchanged `getopt` for `argparse`
 - used `requests` with the `params` argument for clarity
+- added *filename* argument
 - added `pandas` for data management and file write
 - refactored code
-- added *filename* argument
