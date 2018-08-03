@@ -25,6 +25,7 @@ Argument|Shorthand|Usage
 I've made the following changes after cloning the repository:
 - exchanged `pyparsing` for `BeautifulSoup`
 - exchanged `getopt` for `argparse`
+- used `requests` with the `params` argument for clarity
 - added `pandas` for data management and file write
 - refactored code
 - added *filename* argument
