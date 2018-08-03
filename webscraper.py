@@ -49,7 +49,7 @@ def get_tweets(search_params, filename):
 
     list_df = []
     with open(filename, 'w', encoding='utf-8') as fout:
-        columns = ['id','timestamp','name','retweets','favorites','location','text']
+        columns = ['id','timestamp','name','retweets','favorites','text']
         fout.write('{}\n'.format('|'.join(columns)) )
         while active:
             response = get_json_response(search_params, refresh_cursor)
@@ -80,7 +80,7 @@ def get_tweets(search_params, filename):
                 timestamp = datetime.fromtimestamp(raw_date_ms).strftime('%Y-%m-%d %H:%M:%S')
                 span_geo = tweet.find('span', class_="Tweet-geo")
                 location = span_geo['title'] if span_geo else ''
-                data.append((tweetid, timestamp, username, retweets, favorites, location, text))
+                data.append((tweetid, timestamp, username, retweets, favorites, text))
 
                 if n >= search_params.max_tweets:
                     active = False
