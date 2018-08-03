@@ -21,7 +21,7 @@ Argument|Shorthand|Usage
 
 ## Notes
 - The default number of tweets is 20.
-- The default delimiter is `|` to make the data more analysis friendly.
+- The file delimiter is `|` to make the data more analysis friendly.
 - The program will output how many tweets it has collected so far after every GET request.
 
 ## Code Changes
