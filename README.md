@@ -1,13 +1,6 @@
 # Twitter Advanced Search
 
-This Python 3 code is a port of https://github.com/PJHRobles/Twitter-Get-Old-Tweets-Scraper which is originally based on https://github.com/Jefferson-Henrique/GetOldTweets-python
-
-I've made the following changes:
-- exchanged `pyparsing` for `BeautifulSoup`
-- exchanged `getopt` for `argparse`
-- added `pandas` for data management and file write
-- refactored code
-- added *filename* argument
+This Python 3 code is a port of https://github.com/PJHRobles/Twitter-Get-Old-Tweets-Scraper which is originally based on https://github.com/Jefferson-Henrique/GetOldTweets-python.
 
 ## Example
 Here is a sample command line which uses all the available keyword arguments.  
@@ -25,6 +18,13 @@ Argument|Shorthand|Usage
 **Tip:** You have to specify either a `--query` or a `--username` argument or it will complain.
 
 ## Notes
-- The default number of tweets to collect is 20.
-- The default delimiter is `|` to make the data more analysis friendly
+- The default number of tweets is 20.
+- The default delimiter is `|` to make the data more analysis friendly.
 
+## Code Changes
+I've made the following changes after cloning the repository:
+- exchanged `pyparsing` for `BeautifulSoup`
+- exchanged `getopt` for `argparse`
+- added `pandas` for data management and file write
+- refactored code
+- added *filename* argument
