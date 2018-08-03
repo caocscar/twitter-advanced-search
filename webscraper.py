@@ -88,7 +88,7 @@ def get_tweets(search_params, filename):
                     break
 
             df = pd.DataFrame(data, columns=columns)
-            df.to_csv(fout, sep='|', index=False, header=False, quoting=3)
+            df.to_csv(fout, sep='|', index=False, header=False)
             counter = n
             print('{} tweets collected'.format(counter))
             list_df.append(df)
