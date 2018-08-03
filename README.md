@@ -6,6 +6,8 @@ This Python 3 code is a port of https://github.com/PJHRobles/Twitter-Get-Old-Twe
 Here is a sample command line which uses all the available keyword arguments.  
 `python twitter_advanced_search.py --query tennis --username nytimes --since 2016-08-01 --until 2016-09-01 --max_tweets 100 --filename sample.txt`
 
+There is an example [output file](#tweets_collected.tsv) (tab delimited) in the repository.
+
 Argument|Shorthand|Usage
 ---|:---:|---
 --query|-q|`python twitter_advanced_search.py --query "data science"`
@@ -20,6 +22,7 @@ Argument|Shorthand|Usage
 ## Notes
 - The default number of tweets is 20.
 - The default delimiter is `|` to make the data more analysis friendly.
+- The program will output how many tweets it has collected so far after every GET request.
 
 ## Code Changes
 I've made the following changes after cloning the repository:
