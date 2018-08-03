@@ -46,6 +46,9 @@ def get_tweets(search_params, filename):
     active = True
     refresh_cursor = ''
     counter = 0
+    
+    regex_text = re.compile("TweetTextSize js-tweet-text .+")
+    regex_tweet = re.compile("tweet js-stream-tweet .+")
 
     list_df = []
     with open(filename, 'w', encoding='utf-8') as fout:
@@ -62,7 +65,7 @@ def get_tweets(search_params, filename):
                
             soup = BeautifulSoup(html, 'html.parser')
            
-            tweets = soup.find_all('div', class_= re.compile("tweet js-stream-tweet .+") )
+            tweets = soup.find_all('div', class_ = regex_tweet)
             if len(tweets) == 0:
                 break
                
@@ -70,7 +73,7 @@ def get_tweets(search_params, filename):
             for n, tweet in enumerate(tweets, start=counter+1):
                 tweetid = tweet['data-tweet-id']
                 username = tweet['data-name']
-                text = tweet.find('p', class_ = re.compile("TweetTextSize js-tweet-text .+") ).text.replace('\n',' ').strip()
+                text = tweet.find('p', class_ = regex_text).text.replace('\n',' ')
                 span_retweet = tweet.find('span', class_ = "ProfileTweet-action--retweet")
                 retweets = int(span_retweet.text.replace(',','').strip('\n').split()[0])
                 span_favs = tweet.find('span', class_ = "ProfileTweet-action--favorite")
@@ -78,8 +81,6 @@ def get_tweets(search_params, filename):
                 span_timestamp = tweet.find('span', class_ = 'js-short-timestamp')
                 raw_date_ms = int(span_timestamp['data-time'])
                 timestamp = datetime.fromtimestamp(raw_date_ms).strftime('%Y-%m-%d %H:%M:%S')
-                span_geo = tweet.find('span', class_="Tweet-geo")
-                location = span_geo['title'] if span_geo else ''
                 data.append((tweetid, timestamp, username, retweets, favorites, text))
 
                 if n >= search_params.max_tweets:
@@ -87,12 +88,13 @@ def get_tweets(search_params, filename):
                     break
 
             df = pd.DataFrame(data, columns=columns)
-            df.to_csv(fout, sep='|', index=False, header=False)
+            df.to_csv(fout, sep='|', index=False, header=False, quoting=3)
             counter = n
             print('{} tweets collected'.format(counter))
             list_df.append(df)
 
-    return pd.concat(list_df)
+
+    return pd.concat(list_df, ignore_index=True)
 
 
 class TweetSearch(object):
@@ -118,8 +120,4 @@ class TweetSearch(object):
 
     def set_max_tweets(self, max_tweets):
         self.max_tweets = max_tweets
-        return self
-
-    def set_language(self, language):
-        self.language = language
         return self
