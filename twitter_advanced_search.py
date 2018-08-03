@@ -15,8 +15,7 @@ def main():
     parser.add_argument('-e','--until', type=str, help='end date in UTC')
     parser.add_argument('-m','--max_tweets', type=int, default=search_params.max_tweets, help='maximum number of tweets in reverse chronological order')
     parser.add_argument('-f','--filename', type=str, default='tweets_collected.txt', help='output filename')
-    line = '-q tennis -u nytimes -e 2016-09-10 -m 100'
-    args = parser.parse_args(line.split())
+    args = parser.parse_args()
 
     if not args.query and not args.username:
         print('You need to specify at least a --query OR --username argument')
