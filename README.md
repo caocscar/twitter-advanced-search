@@ -17,7 +17,7 @@ Argument|Shorthand|Usage
 
 **Tip:** You have to specify either a `--query` or a `--username` argument or it will complain.
 
-Here is an example [output file](#tweets_collected.tsv) (tab delimited for GitHub).
+Here is an example [output file](#blob/master/tweets_collected.tsv) (tab delimited for GitHub).
 
 ## Notes
 - The default number of tweets is 20.
