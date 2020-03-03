@@ -17,7 +17,7 @@ Argument|Shorthand|Usage
 --until|-e|`python twitter_advanced_search.py -u rogerfederer --until 2017-08-09`
 --max_tweets|-m|`python twitter_advanced_search.py -q tennis --max_tweets 100`
 --filename|-f|`python twitter_advanced_search.py -u mlive --filename output.txt`
---userlist|-ul|`python twitter_advanced_search.py -userlist usernamelist.txt`
+--userlist|-ul|`python twitter_advanced_search.py -ul usernamelist.txt`
 
 **Tip:** You have to specify either a `--query` or a `--username` or a `userlist` argument or it will complain.
 
