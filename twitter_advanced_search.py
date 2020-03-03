@@ -1,16 +1,6 @@
 import argparse
-from webscraper import get_tweets, TweetSearch
+from webscraper import TweetSearch, get_users_tweets
 import pandas as pd
-
-def get_users_tweets(search_params, fout, columns, usernames):
-    list_df = []
-    for user in usernames:
-        print(f'user: {user}')
-        search_params.username = user
-        df = get_tweets(search_params, fout, columns)
-        list_df.append(df)
-        print(f'Finished scraping {df.shape[0]} tweets for {user}\n')    
-    return pd.concat(list_df, ignore_index=True)
 
 def main():
     
@@ -29,6 +19,13 @@ def main():
     parser.add_argument('-ul','--userlist', type=str, help='input filename for username list')
     args = parser.parse_args()
 
+    # debugging purposes
+    args.query = 'tennis'
+    args.since = '2016-08-01'
+    args.until = '2016-09-01'
+    args.max_tweets = 100
+    args.filename = 'sample.txt'
+    args.userlist = 'userlist.txt'
     # input error checking
     if not args.query and not args.username and not args.userlist:
         print('You need to specify at least a --query OR --username argument OR --userlist argument')
@@ -58,10 +55,11 @@ def main():
         columns = ['id','timestamp','name','retweets','favorites','text']
         fout.write('{}\n'.format('|'.join(columns)) )
         df = get_users_tweets(search_params, fout, columns, usernames)
+        df.columns = columns
     
     print(f'Finished scraping tweets into {filename}')
     return df
 
 if __name__ == '__main__':
-    df = main()
+    data = main()
     
