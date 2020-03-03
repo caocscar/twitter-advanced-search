@@ -2,6 +2,16 @@ import argparse
 from webscraper import get_tweets, TweetSearch
 import pandas as pd
 
+def get_users_tweets(search_params, fout, columns, usernames):
+    list_df = []
+    for user in usernames:
+        print(f'user: {user}')
+        search_params.username = user
+        df = get_tweets(search_params, fout, columns)
+        list_df.append(df)
+        print(f'Finished scraping {df.shape[0]} tweets for {user}\n')    
+    return pd.concat(list_df, ignore_index=True)
+
 def main():
     
     search_params = TweetSearch()
@@ -43,19 +53,14 @@ def main():
     search_params.max_tweets = args.max_tweets
     filename = args.filename
 
-    list_df = []
+    # iterate through list of users
     with open(filename, 'w', encoding='utf-8') as fout:
         columns = ['id','timestamp','name','retweets','favorites','text']
         fout.write('{}\n'.format('|'.join(columns)) )
-        for user in usernames:
-            print(f'user: {user}')
-            search_params.username = user
-            df = get_tweets(search_params, fout, columns)
-            list_df.append(df)
-            print(f'Finished scraping {df.shape[0]} tweets for {user}\n')
+        df = get_users_tweets(search_params, fout, columns, usernames)
     
     print(f'Finished scraping tweets into {filename}')
-    return pd.concat(list_df, ignore_index=True)
+    return df
 
 if __name__ == '__main__':
     df = main()
