@@ -10,27 +10,47 @@ class TweetSearch(object):
     def __init__(self):
         self.max_tweets = 20
 
-    def set_username(self, username):
-        self.username = username
-        return self
+    @property
+    def username(self):
+        return self._username
+    
+    @username.setter
+    def username(self, username):
+        self._username = username
 
-    def set_since(self, since):
-        self.since = since
-        return self
+    @property
+    def since(self):
+        return self._since
 
-    def set_until(self, until):
-        self.until = until
-        return self
+    @since.setter
+    def since(self, since):
+        self._since = since
 
-    def set_query(self, query):
-        self.query = query
-        return self
+    @property
+    def until(self):
+        return self._until
 
-    def set_max_tweets(self, max_tweets):
-        self.max_tweets = max_tweets
-        return self
+    @until.setter
+    def until(self, until):
+        self._until = until
+        
+    @property
+    def query(self):
+        return self._query
+    
+    @query.setter
+    def query(self, query):
+        self._query = query
 
+    @property
+    def max_tweets(self):
+        return self._max_tweets
 
+    @max_tweets.setter
+    def max_tweets(self, max_tweets):
+        self._max_tweets = max_tweets
+
+#%%
 def get_users_tweets(search_params, fout, columns, usernames):
     
     list_tweets = []

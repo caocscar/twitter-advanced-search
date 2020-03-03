@@ -1,11 +1,9 @@
 import argparse
 from webscraper import TweetSearch, get_users_tweets
-import pandas as pd
+import pandas as pd  
 
 def main():
-    
-    search_params = TweetSearch()
-    
+        
     description = '''
     Twitter Scraper for CSCAR.
     '''
@@ -14,7 +12,7 @@ def main():
     parser.add_argument('-u','--username', type=str, help='twitter username')
     parser.add_argument('-s','--since', type=str, help='start date in UTC')
     parser.add_argument('-e','--until', type=str, help='end date in UTC')
-    parser.add_argument('-m','--max_tweets', type=int, default=search_params.max_tweets, help='maximum number of tweets in reverse chronological order')
+    parser.add_argument('-m','--max_tweets', type=int, default=20, help='maximum number of tweets in reverse chronological order')
     parser.add_argument('-f','--filename', type=str, default='tweets_collected.txt', help='output filename')
     parser.add_argument('-ul','--userlist', type=str, help='input filename for username list')
     args = parser.parse_args()
@@ -35,6 +33,7 @@ def main():
         return
     
     # set search parameters and list of usernames
+    search_params = TweetSearch()
     if args.query:
         search_params.query = args.query
     if args.since:
