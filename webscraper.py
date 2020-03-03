@@ -38,7 +38,7 @@ def get_json_response(search_params, refresh_cursor):
     
     return R.json()
 
-def get_tweets(search_params, filename):
+def get_tweets(search_params, fout, columns):
 
     if search_params.max_tweets <= 0:
         return
@@ -51,48 +51,44 @@ def get_tweets(search_params, filename):
     regex_tweet = re.compile("tweet js-stream-tweet .+")
 
     list_df = []
-    with open(filename, 'w', encoding='utf-8') as fout:
-        columns = ['id','timestamp','name','retweets','favorites','text']
-        fout.write('{}\n'.format('|'.join(columns)) )
-        while active:
-            response = get_json_response(search_params, refresh_cursor)
 
-            if not response or len(response['items_html'].strip()) == 0:
-                break
+    while active:
+        response = get_json_response(search_params, refresh_cursor)
 
-            refresh_cursor = response['min_position']
-            html = response['items_html']   
-               
-            soup = BeautifulSoup(html, 'html.parser')
+        if not response or len(response['items_html'].strip()) == 0:
+            break
+
+        refresh_cursor = response['min_position']
+        html = response['items_html']                  
+        soup = BeautifulSoup(html, 'html.parser')
+       
+        tweets = soup.find_all('div', class_ = regex_tweet)
+        if len(tweets) == 0:
+            break
            
-            tweets = soup.find_all('div', class_ = regex_tweet)
-            if len(tweets) == 0:
+        data = []
+        for n, tweet in enumerate(tweets, start=counter+1):
+            tweetid = tweet['data-tweet-id']
+            username = tweet['data-name']
+            text = tweet.find('p', class_ = regex_text).text.replace('\n',' ')
+            span_retweet = tweet.find('span', class_ = "ProfileTweet-action--retweet")
+            retweets = int(span_retweet.text.replace(',','').strip('\n').split()[0])
+            span_favs = tweet.find('span', class_ = "ProfileTweet-action--favorite")
+            favorites = int(span_favs.text.replace(',','').strip('\n').split()[0])
+            span_timestamp = tweet.find('span', class_ = 'js-short-timestamp')
+            raw_date_ms = int(span_timestamp['data-time'])
+            timestamp = datetime.fromtimestamp(raw_date_ms).strftime('%Y-%m-%d %H:%M:%S')
+            data.append((tweetid, timestamp, username, retweets, favorites, text))
+
+            if n >= search_params.max_tweets:
+                active = False
                 break
-               
-            data = []
-            for n, tweet in enumerate(tweets, start=counter+1):
-                tweetid = tweet['data-tweet-id']
-                username = tweet['data-name']
-                text = tweet.find('p', class_ = regex_text).text.replace('\n',' ')
-                span_retweet = tweet.find('span', class_ = "ProfileTweet-action--retweet")
-                retweets = int(span_retweet.text.replace(',','').strip('\n').split()[0])
-                span_favs = tweet.find('span', class_ = "ProfileTweet-action--favorite")
-                favorites = int(span_favs.text.replace(',','').strip('\n').split()[0])
-                span_timestamp = tweet.find('span', class_ = 'js-short-timestamp')
-                raw_date_ms = int(span_timestamp['data-time'])
-                timestamp = datetime.fromtimestamp(raw_date_ms).strftime('%Y-%m-%d %H:%M:%S')
-                data.append((tweetid, timestamp, username, retweets, favorites, text))
 
-                if n >= search_params.max_tweets:
-                    active = False
-                    break
-
-            df = pd.DataFrame(data, columns=columns)
-            df.to_csv(fout, sep='|', index=False, header=False)
-            counter = n
-            print('{} tweets collected'.format(counter))
-            list_df.append(df)
-
+        df = pd.DataFrame(data, columns=columns)
+        df.to_csv(fout, sep='|', index=False, header=False, line_terminator='\n')
+        counter = n
+        print('{} tweets collected'.format(counter))
+        list_df.append(df)
 
     return pd.concat(list_df, ignore_index=True)
 
