@@ -13,8 +13,9 @@ def main():
     parser.add_argument('-s','--since', type=str, help='start date in UTC')
     parser.add_argument('-e','--until', type=str, help='end date in UTC')
     parser.add_argument('-m','--max_tweets', type=int, default=20, help='maximum number of tweets in reverse chronological order')
-    parser.add_argument('-f','--filename', type=str, default='tweets_collected.txt', help='output filename')
+    parser.add_argument('-f','--filename', type=str, default='tweets.txt', help='output filename')
     parser.add_argument('-ul','--userlist', type=str, help='input filename for username list')
+    parser.add_argument('-d','--delay', type=float, default=0.8, help='timer delay between GET request to avoid HTTP 429 error')
     args = parser.parse_args()
 
     # debugging purposes
@@ -47,8 +48,9 @@ def main():
         usernames = df[0]
     else:
         usernames = [args.username]
-        
+
     search_params.max_tweets = args.max_tweets
+    search_params.delay = args.delay        
     filename = args.filename
 
     # iterate through list of users

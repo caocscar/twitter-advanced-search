@@ -50,6 +50,14 @@ class TweetSearch(object):
     @max_tweets.setter
     def max_tweets(self, max_tweets):
         self._max_tweets = max_tweets
+        
+    @property
+    def delay(self):
+        return self._delay
+    
+    @delay.setter
+    def delay(self, delay):
+        self._delay = delay
 
 #%%
 def get_users_tweets(search_params, fout, columns, usernames):
@@ -80,7 +88,7 @@ def get_tweets(search_params, fout, columns):
 
     while active:
         response = get_json_response(search_params, refresh_cursor)
-        time.sleep(0.1)
+        time.sleep(search_params.delay)
         # extract tweets from response
         if not response or len(response['items_html'].strip()) == 0:
             break
@@ -118,7 +126,7 @@ def get_json_response(search_params, refresh_cursor):
         'Connection': 'keep-alive'
     }
     query = create_query(search_params)         
-    params = {'f': 'tweets', # previously realtime
+    params = {'f': 'tweets',
               'src': 'typd',
               'lang': 'en-US',
               'q': query,

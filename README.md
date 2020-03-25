@@ -18,6 +18,7 @@ Argument|Shorthand|Usage
 --max_tweets|-m|`python twitter_advanced_search.py -q tennis --max_tweets 100`
 --filename|-f|`python twitter_advanced_search.py -u mlive --filename output.txt`
 --userlist|-ul|`python twitter_advanced_search.py -ul usernamelist.txt`
+--delay|-d|`python twitter_advanced_search.py -d 0.1`
 
 **Tip:** You have to specify either a `--query` or a `--username` or a `userlist` argument or it will complain.
 
@@ -25,6 +26,8 @@ Here is an example [output file](tweets_collected.tsv) (tab delimited for GitHub
 
 ## Notes
 - The default number of tweets is 20.
+- The default time delay is 0.8s after each GET request.
+- The default output filename is *tweets.txt*.
 - The file delimiter is `|` to make the data more analysis friendly.
 - The program will output how many tweets it has collected so far after every GET request.
 
