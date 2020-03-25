@@ -18,12 +18,14 @@ def main():
     args = parser.parse_args()
 
     # debugging purposes
-    args.query = 'tennis'
-    args.since = '2016-08-01'
-    args.until = '2016-09-01'
-    args.max_tweets = 100
-    args.filename = 'sample.txt'
-    args.userlist = 'userlist.txt'
+    if args.filename=='tweets_collected.txt' and args.max_tweets==20 and not (args.query or args.since or args.until or args.userlist or args.username):
+        args.query = 'tennis'
+        args.since = '2016-08-01'
+        args.until = '2016-09-01'
+        args.max_tweets = 100
+        args.filename = 'sample.txt'
+        args.userlist = 'userlist.txt'
+        
     # input error checking
     if not args.query and not args.username and not args.userlist:
         print('You need to specify at least a --query OR --username argument OR --userlist argument')
