@@ -56,9 +56,9 @@ def main():
         columns = ['id','timestamp','name','retweets','favorites','text']
         fout.write('{}\n'.format('|'.join(columns)) )
         df = get_users_tweets(search_params, fout, columns, usernames)
-        df.columns = columns
+        if not df.empty: df.columns = columns
     
-    print(f'Finished scraping tweets into {filename}')
+    print(f'Finished scraping {df.shape[0]} total tweets into {filename}')
     return df
 
 if __name__ == '__main__':
