@@ -116,7 +116,7 @@ def get_json_response(search_params, refresh_cursor):
         'Connection': 'keep-alive'
     }
     query = create_query(search_params)         
-    params = {'f': 'realtime',
+    params = {'f': 'tweets', # previously realtime
               'src': 'typd',
               'lang': 'en-US',
               'q': query,
