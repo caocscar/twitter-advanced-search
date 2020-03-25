@@ -4,6 +4,7 @@ from datetime import datetime
 import pandas as pd
 import re
 from itertools import chain
+import time
 
 class TweetSearch(object):
 
@@ -79,6 +80,7 @@ def get_tweets(search_params, fout, columns):
 
     while active:
         response = get_json_response(search_params, refresh_cursor)
+        time.sleep(0.1)
         # extract tweets from response
         if not response or len(response['items_html'].strip()) == 0:
             break
