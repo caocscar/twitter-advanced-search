@@ -127,6 +127,7 @@ def get_json_response(search_params, refresh_cursor):
     url = 'https://twitter.com/i/search/timeline'
     R = requests.get(url, params=params, headers=headers)
     R.raise_for_status()
+#    print(R.url)
     
     return R.json()
 
@@ -151,7 +152,7 @@ def parse_tweet(tweet):
     regex_text = re.compile("TweetTextSize js-tweet-text .+")
     tweetid = tweet['data-tweet-id']
     username = tweet['data-name']
-    text = tweet.find('p', class_ = regex_text).text.replace('\n',' ')
+    text = tweet.find('p', class_ = regex_text).text.replace('\n',' ').replace('\r',' ')
     span_retweet = tweet.find('span', class_ = "ProfileTweet-action--retweet")
     retweets = int(span_retweet.text.replace(',','').strip('\n').split()[0])
     span_favs = tweet.find('span', class_ = "ProfileTweet-action--favorite")
