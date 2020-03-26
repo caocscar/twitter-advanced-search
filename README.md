@@ -18,7 +18,7 @@ Argument|Shorthand|Usage
 --max_tweets|-m|`python twitter_advanced_search.py -q tennis --max_tweets 100`
 --filename|-f|`python twitter_advanced_search.py -u mlive --filename output.txt`
 --userlist|-ul|`python twitter_advanced_search.py -ul usernamelist.txt`
---delay|-d|`python twitter_advanced_search.py -d 0.1`
+--delay|-d|`python twitter_advanced_search.py -d 0.8`
 
 **Tip:** You have to specify either a `--query` or a `--username` or a `userlist` argument or it will complain.
 
