@@ -19,6 +19,7 @@ Argument|Shorthand|Usage
 --filename|-f|`python twitter_advanced_search.py -u mlive --filename output.txt`
 --userlist|-ul|`python twitter_advanced_search.py -ul usernamelist.txt`
 --delay|-d|`python twitter_advanced_search.py -d 0.8`
+--format|-fmt|`python twitter_advanced_search.py --format tweets`
 
 **Tip:** You have to specify either a `--query` or a `--username` or a `userlist` argument or it will complain.
 
@@ -28,6 +29,7 @@ Here is an example [output file](tweets_collected.tsv) (tab delimited for GitHub
 - The default number of tweets is 20.
 - The default time delay is 0.8s after each GET request.
 - The default output filename is *tweets.txt*.
+- The format options are {tweets (default),live,realtime}. I honestly do not know the difference between them.
 - The file delimiter is `|` to make the data more analysis friendly.
 - The program will output how many tweets it has collected so far after every GET request.
 
@@ -36,6 +38,6 @@ I've made the following changes after cloning the repository:
 - exchanged `pyparsing` for `BeautifulSoup`
 - exchanged `getopt` for `argparse`
 - used `requests` with the `params` argument for clarity
-- added *filename* and *userlist* keyword argument
+- added *filename, userlist, delay, format* keyword arguments
 - added `pandas` for data management and file write
 - refactored code

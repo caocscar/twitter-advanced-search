@@ -58,6 +58,14 @@ class TweetSearch(object):
     @delay.setter
     def delay(self, delay):
         self._delay = delay
+        
+    @property
+    def format(self):
+        return self._format
+            
+    @format.setter
+    def format(self, format):
+        self._format = format
 
 #%%
 def get_users_tweets(search_params, fout, columns, usernames):
@@ -126,7 +134,7 @@ def get_json_response(search_params, refresh_cursor):
         'Connection': 'keep-alive'
     }
     query = create_query(search_params)         
-    params = {'f': 'tweets',
+    params = {'f': search_params.format, 
               'src': 'typd',
               'lang': 'en-US',
               'q': query,
