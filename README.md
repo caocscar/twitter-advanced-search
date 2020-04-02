@@ -9,29 +9,27 @@ Here is a sample command line which uses most of the available keyword arguments
 Another similar example using a userlist in lieu of a single user. See example [input userlist file](userlist.txt).  
 `python twitter_advanced_search.py --query tennis --since 2016-08-01 --until 2016-09-01 --max_tweets 100 --filename sample.txt --userlist userlist.txt`
 
-Argument|Shorthand|Usage
----|:---:|---
---query|-q|`python twitter_advanced_search.py --query "data science"`
---username|-u|`python twitter_advanced_search.py --username arc_um`
---since|-s|`python twitter_advanced_search.py -q nadal --since 2012-03-14`
---until|-e|`python twitter_advanced_search.py -u rogerfederer --until 2017-08-09`
---max_tweets|-m|`python twitter_advanced_search.py -q tennis --max_tweets 100`
---filename|-f|`python twitter_advanced_search.py -u mlive --filename output.txt`
---userlist|-ul|`python twitter_advanced_search.py -ul usernamelist.txt`
---delay|-d|`python twitter_advanced_search.py -d 0.8`
---format|-fmt|`python twitter_advanced_search.py --format tweets`
+Argument|Shorthand|Description|Default|Example
+---|:---:|---|:---:|---
+--query|-q|query to use||`python twitter_advanced_search.py --query "data science"`
+--username|-u|twitter handle||`python twitter_advanced_search.py --username arc_um`
+--since|-s|start date||`python twitter_advanced_search.py -q nadal --since 2012-03-14`
+--until|-e|end date||`python twitter_advanced_search.py -u rogerfederer --until 2017-08-09`|
+--max_tweets|-m|maximum number of tweets to get for each username|20|`python twitter_advanced_search.py -q tennis --max_tweets 100`
+--filename|-f|output filename|tweets.txt|`python twitter_advanced_search.py -u mlive --filename output.txt`
+--userlist|-ul|input file containing list of usernames||`python twitter_advanced_search.py -ul usernamelist.txt`
+--delay|-d|time delay in seconds after each GET request|1.0|`python twitter_advanced_search.py -d 0.8`
+--format|-fmt|choose from {tweets, live, realtime}. I honestly do not understand the difference between them.|tweets|`python twitter_advanced_search.py --format tweets`
 
 **Tip:** You have to specify either a `--query` or a `--username` or a `userlist` argument or it will complain.
 
 Here is an example [output file](tweets_collected.tsv) (tab delimited for GitHub).
 
 ## Notes
-- The default number of tweets is 20.
-- The default time delay is 0.8s after each GET request.
-- The default output filename is *tweets.txt*.
-- The format options are {tweets (default),live,realtime}. I honestly do not know the difference between them.
 - The file delimiter is `|` to make the data more analysis friendly.
 - The program will output how many tweets it has collected so far after every GET request.
+- The program scrapes in reverse chronological order.
+- It will scrape about 1200 tweets per minute.
 
 ## Code Changes
 I've made the following changes after cloning the repository:

@@ -15,7 +15,7 @@ def main():
     parser.add_argument('-m','--max_tweets', type=int, default=20, help='maximum number of tweets in reverse chronological order')
     parser.add_argument('-f','--filename', type=str, default='tweets.txt', help='output filename')
     parser.add_argument('-ul','--userlist', type=str, help='input filename for username list')
-    parser.add_argument('-d','--delay', type=float, default=0.8, help='timer delay between GET request to avoid HTTP 429 error')
+    parser.add_argument('-d','--delay', type=float, default=1.0, help='timer delay between GET request to avoid HTTP 429 error')
     parser.add_argument('-fmt','--format', type=str, default='tweets', help='query format')
     args = parser.parse_args()
 
@@ -27,6 +27,7 @@ def main():
         args.max_tweets = 100
         args.filename = 'sample.txt'
         args.userlist = 'userlist.txt'
+        args.delay = 0.1
         
     # input error checking
     if not args.query and not args.username and not args.userlist:
